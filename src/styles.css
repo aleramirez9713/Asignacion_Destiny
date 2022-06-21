@@ -1,0 +1,44 @@
+.cat {
+  height:60px
+ }
+ img {
+  width: auto; 
+  max-height: 100%; 
+ }
+
+ .logoLayout {
+  height:100px
+ }
+ img {
+  width: auto; 
+  max-height: 100%; 
+ }
+
+
+.box-shadow {
+  box-shadow: 0px 10px 10px rgba(59,188,7,255);
+}
+
+.box-shadowForm{
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.87);
+}
+
+
+.file-upload-content {
+  display: flex;
+  text-align: center;
+}
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+.centerIMG {
+  height: "100%";
+  position: "center";
+  width: "100%";
+  padding: 24;
+}

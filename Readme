@@ -1,0 +1,20 @@
+Colores:
+
+primario: azul:
+#00aaf8
+rgba(0,170,248,255)
+
+
+secundario: vende:
+#3bbc07
+rgba(59,188,7,255)
+
+
+terciario: azul claro:
+#6ddcfc
+rgb(109,220,252)
+
+cuarto: azul mas oscuro:
+#0c8be0
+rgb(12,139,224)
+
