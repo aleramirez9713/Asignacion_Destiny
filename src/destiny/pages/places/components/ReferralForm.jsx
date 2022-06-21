@@ -149,7 +149,7 @@ export const ReferralForm = () => {
       >
         <Typography
           variant="h6"
-          sx={{ mt: "30px", padding: "1px", alignItems: "center", alignItems: "center"}}
+          sx={{ mt: "30px", padding: "1px", alignItems: "center"}}
         >
           {steps[activeStep].label}
         </Typography>
