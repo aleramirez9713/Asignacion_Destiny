@@ -3,7 +3,6 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
-// import CommonButton from '../CommonButton/CommonButton';
 import Box from "@mui/material/Box";
 import { Button, colors, Grid} from "@mui/material";
 import { Link } from "react-router-dom";

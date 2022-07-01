@@ -1,8 +1,8 @@
-import Footer from "../../../ui/Footer";
-import NavBar from "../../../ui/NavBar";
+import Footer from "../../../../ui/Footer";
+import NavBar from "../../../../ui/NavBar";
 import { Button, Grid, Link, Typography } from "@mui/material";
 import { Link as RouterD } from "react-router-dom";
-import StepByStep from "./components/StepByStep";
+import StepByStep from "../components/StepByStep";
 
 const styles = {
   heroContainer: {

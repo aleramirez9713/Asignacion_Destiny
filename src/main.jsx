@@ -1,14 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux"
+import "./styles.css";
+import { YourDestinyApp } from "./YourDestinyApp";
+import { store } from "./store";
 
-import './styles.css'
-import { YourDestinyApp } from './YourDestinyApp'
-
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <YourDestinyApp />
-    </BrowserRouter>
+    <Provider store={ store }>
+      <BrowserRouter>
+        <YourDestinyApp />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
-)
+);

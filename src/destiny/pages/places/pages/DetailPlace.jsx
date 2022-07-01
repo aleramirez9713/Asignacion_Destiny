@@ -1,5 +1,5 @@
-import Footer from "../../../ui/Footer";
-import NavBar from "../../../ui/NavBar";
+import Footer from "../../../../ui/Footer";
+import NavBar from "../../../../ui/NavBar";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -8,9 +8,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Link as RouterD } from "react-router-dom";
-import { ButtonGroup, Fab, Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { MapPlace } from "../components/MapPlace";
 
 export const DetailPlace = () => {
   return (
@@ -111,7 +112,7 @@ export const DetailPlace = () => {
               <Grid item>
                 <Button
                   component={RouterD}
-                  to="/place/register"
+                  to="/place/detail/edit"
                   color="secondary"
                   sx={{ padding: 2 }}
                 >
@@ -120,8 +121,7 @@ export const DetailPlace = () => {
                 </Button>
 
                 <Button
-                  component={RouterD}
-                  to="/place/register"
+                  
                   color="error"
                   sx={{ padding: 2 }}
                 >
@@ -132,31 +132,16 @@ export const DetailPlace = () => {
             </Grid>
           </CardContent>
 
-          {/* <Grid container justifyContent="center" sx={{ mb: 2 }}>
-            <Typography
-                    gutterBottom
-                    variant="h6"
-                    component="div"
-                    color="divider"
-                  >
-                    Mapa
-                  </Typography>
-
-</Grid> */}
-
           <Grid 
           container 
           justifyContent="center" 
           sx={{ mb: 2 , mt:5}}
           >
-            <Card  sx={{ maxWidth: "80%", maxHeight: "100%" }}>
-              <CardMedia
-                component="img"
-                alt="map"
-                padding="10"
-                sx={{ maxwidth: "50%", mr: "1px" }}
-                image="../assets/1.jpg"
-              />
+            <Card  sx={{ maxWidth: "100%", maxHeight: "100%" }}>
+  
+
+                <MapPlace />
+              {/* /> */}
             </Card>
           </Grid>
         </Grid>

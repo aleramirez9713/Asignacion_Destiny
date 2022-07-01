@@ -1,7 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { UserProfile } from "../../auth/pages/users/UserProfile";
 import { HomePage } from "../pages/HomePage";
-import { DetailPlace } from "../pages/places/DetailPlace";
-import { RegisterPlace } from "../pages/places/RegisterPlace";
+import { DetailPlace } from "../pages/places/pages/DetailPlace";
+import { EditPlace } from "../pages/places/pages/EditPlace";
+import { RegisterPlace } from "../pages/places/pages/RegisterPlace";
+
 
 export const DestinyRoutes = () => {
   return (
@@ -10,6 +13,8 @@ export const DestinyRoutes = () => {
 
       <Route path="/place/register" element={<RegisterPlace/>} />
       <Route path="/place/detail" element={<DetailPlace/>} />
+      <Route path="/place/detail/edit" element={<EditPlace/>} />
+      <Route path="/profile" element={<UserProfile/>} />
 
       <Route path="/*" element={<Navigate to="/" />} />
 
