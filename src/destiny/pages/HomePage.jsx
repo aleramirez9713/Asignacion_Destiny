@@ -10,6 +10,7 @@ export const HomePage = () => {
   return (
     <>
       <NavBar />
+
       <FirstSection />
 
       <SecondSection />

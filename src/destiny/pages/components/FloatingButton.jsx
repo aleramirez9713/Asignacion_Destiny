@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 export default function FloatingButton() {
   return (
     <>
-    <Fab  component={Link} to="/place/register"
+    <Fab  
+    component={Link} to="/place/register"
       size="large"
     color="secondary" aria-label="add"
     sx={{

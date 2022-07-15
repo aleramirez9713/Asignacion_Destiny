@@ -100,7 +100,7 @@ export const UserProfile = () => {
                 </Typography>
               </Grid>
 
-              <Grid item>
+              {/* <Grid item>
                 <Button
                   onClick={handleOpen}
                   color="secondary"
@@ -124,7 +124,7 @@ export const UserProfile = () => {
                   <DeleteIcon sx={{ fontSize: 30, mr: 1 }} />
                   Eliminar perfil
                 </Button>
-              </Grid>
+              </Grid> */}
             </Grid>
           </CardContent>
         </Grid>
@@ -153,7 +153,7 @@ export const UserProfile = () => {
               mb: 1,
             }}
           >
-            Mis sitios
+            Lugares
           </Typography>
         </Grid>
         <GridPlaces />

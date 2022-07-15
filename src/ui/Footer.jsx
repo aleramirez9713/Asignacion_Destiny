@@ -9,7 +9,9 @@ export default function Footer() {
   return (
     <>
      <Divider sx={{  mt: 2 }}/>
+     
     <Grid container padding={1} spacing={2} sx={{ mb: 2, mt: 1 }}  textAlign="center">
+          
           <Grid
             item
             sx={{ mb: 2, mt: 1 , width: "100%", height: "100%" }}

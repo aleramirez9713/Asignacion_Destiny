@@ -88,15 +88,6 @@ export const RegisterPage = () => {
               />
             </Grid>
 
-            {/* <Grid item xs={ 12 } sx={{ mt: 2 }}>
-              <TextField 
-                label="Verificar Contraseña" 
-                type="password" 
-                placeholder='Contraseña' 
-                fullWidth
-              />
-            </Grid> */}
-
              <Grid 
                 item 
                 xs={ 12 }

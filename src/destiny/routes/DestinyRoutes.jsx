@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, } from "react-router-dom";
 import { UserProfile } from "../../auth/pages/users/UserProfile";
 import { HomePage } from "../pages/HomePage";
 import { DetailPlace } from "../pages/places/pages/DetailPlace";
@@ -12,8 +12,8 @@ export const DestinyRoutes = () => {
       <Route path="/" element={<HomePage />} />
 
       <Route path="/place/register" element={<RegisterPlace/>} />
-      <Route path="/place/detail" element={<DetailPlace/>} />
-      <Route path="/place/detail/edit" element={<EditPlace/>} />
+      <Route path="/place/detail/:id" element={<DetailPlace/>} />
+      <Route path="/place/detail/:id/edit" element={<EditPlace/>} />
       <Route path="/profile" element={<UserProfile/>} />
 
       <Route path="/*" element={<Navigate to="/" />} />
@@ -21,3 +21,5 @@ export const DestinyRoutes = () => {
     </Routes>
   );
 };
+
+
