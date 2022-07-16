@@ -3,13 +3,13 @@ import React, { createContext, useState, useContext } from 'react'
 const placeContext = createContext()
 
 export const PlaceProvider = (props) => {
-  const [data, setdata] = useState([])
+  const [dataPlace, setdataPlace] = useState({})
 
   return (
     <placeContext.Provider
       value={{
-        setdata,
-        data
+        setdataPlace,
+        dataPlace
       }}
     >
       {props.children}
@@ -24,3 +24,7 @@ export const useFormPlace = () => {
   }
   return context
 }
+
+
+
+

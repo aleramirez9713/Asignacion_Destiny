@@ -49,8 +49,7 @@ export const FirstSection = () => {
             >
               Conoce y recomienda nuevos lugares
             </Typography>
-            {/* </Box> */}
-            <SearchOption/>
+            
         </Grid>
         </Grid>
        

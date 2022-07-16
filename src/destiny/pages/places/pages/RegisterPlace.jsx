@@ -15,7 +15,7 @@ import  React ,{ useState }from "react";
 
 import {useNavigate } from 'react-router-dom'
 import { useDestinyStore, useForm } from "../../../../hooks";
-
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
 import Box from "@mui/material/Box";
 import { postPlaces } from "../../../../hooks/API/Post";
 
@@ -46,7 +46,7 @@ const formValidations = {
   latitudePlace: [(value) => value.length >= 1, "Campo obligatorio."],
   lenghtPlace: [(value) => value.length >= 1, "Campo obligatorio."],
 
-  // nameRP: [(value) => value.length >= 1, "El nombre es obligatorio."],
+  // nameRP1: [(value) => value.length >= 1, "Campo obligatorio."],
   // latitudeRP: [(value) => value.length >= 1, "Campo obligatorio."],
   // lenghtRP: [(value) => value.length >= 1, "Campo obligatorio."],
 };
@@ -85,7 +85,6 @@ export const RegisterPlace = () => {
   const [ref, setRe] = React.useState({});
   let pointRef = [];
   const [estado, setestado] = React.useState([]);
-
 
   const navigate = useNavigate()
 
@@ -129,9 +128,10 @@ export const RegisterPlace = () => {
 
     if (!isFormValid) return;
 
-    startSavingPlace(formValues);
+    handleSave();
   };
   
+
 
   const handleSave = async () => {
 
@@ -164,7 +164,12 @@ export const RegisterPlace = () => {
 
     let response = await postPlaces(body);
 
+    
+
     navigate('/')
+
+   
+
   };
 
   return (
@@ -277,7 +282,7 @@ export const RegisterPlace = () => {
                     </Typography>
                     <Grid container padding={5} height={60}>
                       <TextField
-                        className="form-control is-invalid"
+                        className="form-control"
                         label="Nombre del lugar"
                         type="text"
                         placeholder="Nombre del lugar"
@@ -369,8 +374,9 @@ export const RegisterPlace = () => {
                       sx={{ alignItems: "center" }}
                     >
                       <TextField
+                        step="any" 
+                        type="number"
                         label="Latitud "
-                        type="float"
                         placeholder="Latitud"
                         width="60vh"
                         sx={{ mr: 2 }}
@@ -383,7 +389,8 @@ export const RegisterPlace = () => {
 
                       <TextField
                         label="Longitud"
-                        type="floating"
+                        step="any" 
+                        type="number"
                         placeholder="Longitud"
                         width="60vh"
                         value={lenghtPlace}
@@ -482,8 +489,8 @@ export const RegisterPlace = () => {
                         value={nameRP1}
                         name="nameRP1"
                         onChange={onInputChange}
-                        // error={!!nameRPValid && formSubmitted}
-                        // helperText={nameRPValid}
+                        // error={!!nameRP1Valid && formSubmitted}
+                        // helperText={nameRP1Valid}
                       />
                     </Grid>
                     <Grid
@@ -506,7 +513,8 @@ export const RegisterPlace = () => {
                     >
                       <TextField
                         label="Latitud "
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Latitud"
                         width="60vh"
                         sx={{ mr: 2 }}
@@ -518,7 +526,8 @@ export const RegisterPlace = () => {
                       />
                       <TextField
                         label="Longitud"
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Longitud"
                         width="60vh"
                         value={lenghtRP1}
@@ -595,7 +604,8 @@ export const RegisterPlace = () => {
                     >
                       <TextField
                         label="Latitud "
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Latitud"
                         width="60vh"
                         sx={{ mr: 2 }}
@@ -607,7 +617,8 @@ export const RegisterPlace = () => {
                       />
                       <TextField
                         label="Longitud"
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Longitud"
                         width="60vh"
                         value={lenghtRP2}
@@ -683,7 +694,8 @@ export const RegisterPlace = () => {
                     >
                       <TextField
                         label="Latitud "
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Latitud"
                         width="60vh"
                         sx={{ mr: 2 }}
@@ -695,7 +707,8 @@ export const RegisterPlace = () => {
                       />
                       <TextField
                         label="Longitud"
-                        type="stateplace"
+                        step="any" 
+                        type="number"
                         placeholder="Longitud"
                         width="60vh"
                         value={lenghtRP3}
@@ -729,7 +742,7 @@ export const RegisterPlace = () => {
               variant="contained"
               justifyContent="center"
               fullWidth
-              onClick={handleSave}
+              onClick={onSubmit}
             >
               Registrar lugar
             </Button>

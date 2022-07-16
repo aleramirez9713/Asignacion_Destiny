@@ -14,11 +14,15 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import {useNavigate } from 'react-router-dom'
 import { useDestinyStore, useForm } from "../../../../hooks";
 import { getPlacesById } from "../../../../hooks/API/Get";
-
+import {useFormPlace} from "../../../../context/placeContext"
 import Box from "@mui/material/Box";
 import { postPlaces } from "../../../../hooks/API/Post";
+import { putPlaces } from "../../../../hooks/API/Put";
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
+
 
 const formData = {
   namePlace: "",
@@ -26,9 +30,6 @@ const formData = {
   latitudePlace: "",
   lenghtPlace: "",
   referencePoints: [
-    // nameRP: "",
-    // latitudeRP: "",
-    // lenghtRP: "",
   ],
 };
 
@@ -37,11 +38,6 @@ const formValidations = {
   descriptionPlace: [ (value) => value.length >= 1, "La descripción es obligatoria."],
   latitudePlace: [(value) => value.length >= 1, "Campo obligatorio."],
   lenghtPlace: [(value) => value.length >= 1, "Campo obligatorio."],
-
-  // nameRP: [(value) => value.length >= 1, "El nombre es obligatorio."],
-  // latitudeRP: [(value) => value.length >= 1, "Campo obligatorio."],
-  // lenghtRP: [(value) => value.length >= 1, "Campo obligatorio."],
-
 
 };
 
@@ -53,13 +49,13 @@ const commonStyles = {
   m: 1,
   border: 1,
   width: '25rem',
-  // height: '5rem',
   borderRadius: '16px'
 };
 
 
 
 export const EditPlace = () => {
+  const { dataPlace, setdataPlace} = useFormPlace();
 
   const { places, setActivePlace } = useDestinyStore();
 
@@ -69,8 +65,17 @@ export const EditPlace = () => {
   const [loading, setLoading] = useState(true);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  
+  const [name, setname] = useState(dataPlace.name);
+  const [description, setdescription] = useState(dataPlace.description);
+  const [availability, setavailability] = useState(dataPlace.availability);
+  const [typePlace, settypePlace] = useState(dataPlace.typePlace);
+  const [latitude, setlatitude] = useState(dataPlace.latitude);
+  const [lenghtPlace, setlenghtPlace] = useState(dataPlace.lenghtPlace);
 
-  const [typePlace, setType] = React.useState("");
+  const [PR, setPR] = useState();
+
+  const navigate = useNavigate()
 
   const getData = async () => {
     let response = await getPlacesById(id)
@@ -87,28 +92,16 @@ export const EditPlace = () => {
   }, []);
   
 
-  const {
-    formState,
-    namePlace,
-    descriptionPlace,
-    statePlace,
-    latitudePlace,
-    lenghtPlace,
-    onInputChange,
-    isFormValid,
-    namePlaceValid,
-    descriptionPlaceValid,
-    latitudePlaceValid,
-    lenghtPlaceValid,
-  } = useForm(formData, formValidations);
+
+  let body = {}
 
 
   const handleChangeType = (event) => {
-    setType(event.target.value);
+    settypePlace(event.target.value);
   };
 
   const handleChangeState = (event) => {
-    setState(event.target.value);
+    setavailability(event.target.value);
   };
 
   const onSubmit = (event) => {
@@ -117,10 +110,43 @@ export const EditPlace = () => {
 
 
 
-  // const handleSave = async () => {
-  //   let response = await postPlaces(body);
+const onInputChange = ({ target }) => {
+  switch (target.name) {
+    case "namePlace":
+      setname(target.value);
+      break;
+      case "descriptionPlace":
+        setdescription(target.value);
+        break;
+        case "latitude":
+          setlatitude(target.value);
+        break;
+        case "lenghtPlace":
+          setlenghtPlace(target.value);
+          break;
+  
+    default:
+      break;
+  }
 
-  // };
+}
+
+
+   
+  const handleSave = async () => {
+
+    body.name= name,
+    body.description = description,
+    body.latitude = latitude,
+    body.lenghtPlace = lenghtPlace,
+    body.typePlace = typePlace,
+    body.availability = availability,
+    body.referencePoints = dataPlace.referencePoints
+    
+
+    let response = await putPlaces(id,body);
+    navigate('/')
+  };
 
   return (
     <>
@@ -192,12 +218,12 @@ export const EditPlace = () => {
                         label="Nombre del lugar"
                         type="text"
                         placeholder="Nombre del lugar"
-                        value={namePlace}
+                        value={name}
                         fullWidth
                         name="namePlace"
                         onChange={onInputChange}
-                        error={!!namePlaceValid && formSubmitted}
-                        helperText={namePlaceValid}
+                        // error={!!namePlaceValid && formSubmitted}
+                        // helperText={namePlaceValid}
                       />
                     </Grid>
 
@@ -208,11 +234,11 @@ export const EditPlace = () => {
                         placeholder="Descripción"
                         fullWidth
                         multiline
-                        value={descriptionPlace}
+                        value={description}
                         name="descriptionPlace"
                         onChange={onInputChange}
-                        error={!!descriptionPlaceValid && formSubmitted}
-                        helperText={descriptionPlaceValid}
+                        // error={!!descriptionPlaceValid && formSubmitted}
+                        // helperText={descriptionPlaceValid}
                       />
                     </Grid>
 
@@ -226,13 +252,17 @@ export const EditPlace = () => {
                           type="statePlace"
                           placeholder="Estado"
                           onChange={handleChangeState}
-                          value={statePlace}
+                          value={availability}
+                          name="availability"
                         >
-                          <MenuItem value={1}>Disponible</MenuItem>
-                          <MenuItem value={2}>No disponible</MenuItem>
+                          <MenuItem value={"Disponible"}>Disponible</MenuItem>
+                          <MenuItem value={"No disponible"}>No disponible</MenuItem>
                         </Select>
                       </FormControl>
                     </Grid>
+                   
+        
+                
 
                     <Grid container padding={5} sx={{ height: "60px" }}>
                       <FormControl fullWidth>
@@ -242,7 +272,10 @@ export const EditPlace = () => {
                           id="select-type"
                           label="typePlace"
                           onChange={handleChangeType}
+                          type="typePlace"
                           value={typePlace}
+                          placeholder="Type"
+                          name="typePlace"
                         >
                           <MenuItem value={"Iglesia"}>Iglesia</MenuItem>
                           <MenuItem value={"Restaurante"}>Restaurante</MenuItem>
@@ -281,26 +314,28 @@ export const EditPlace = () => {
                     >
                       <TextField
                         label="Latitud "
-                        type="float"
+                        step="any" 
+                        type="number"
                         placeholder="Latitud"
                         width="60vh"
                         sx={{ mr: 2 }}
-                        value={latitudePlace}
-                        name="latitudePlace"
+                        value={latitude}
+                        name="latitude"
                         onChange={onInputChange}
-                        error={!!latitudePlaceValid && formSubmitted}
-                        helperText={latitudePlaceValid}
+                        // error={!!latitudePlaceValid && formSubmitted}
+                        // helperText={latitudePlaceValid}
                       />
                       <TextField
                         label="Longitud"
-                        type="floating"
+                        step="any" 
+                        type="number"
                         placeholder="Longitud"
                         width="60vh"
                         value={lenghtPlace}
                         name="lenghtPlace"
                         onChange={onInputChange}
-                        error={!!lenghtPlaceValid && formSubmitted}
-                        helperText={lenghtPlaceValid}
+                        // error={!!lenghtPlaceValid && formSubmitted}
+                        // helperText={lenghtPlaceValid}
                       />
                     </Grid>
                     <Grid
@@ -317,296 +352,6 @@ export const EditPlace = () => {
         </Grid>
         </Grid>
 
-        <Grid item>
-              <Grid
-                container
-                display="flex"
-                justifyContent="center"
-              >
-              
-                <Typography
-                      variant="h6"
-                      sx={{ mt: "5px", mb: "10px", padding: "1px", alignItems: "center" }}
-                    >
-                      Puntos de referencia
-                    </Typography>
-                <Grid
-                  container
-                  direction="flex"
-                  spacing={0}
-                  xl={12}
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{
-                    width: "100% ",
-                    padding: 3,
-                    borderRadius: 2,
-                    alignItems: "center",
-                  }}
-                >
-                    <Box sx={{ ...commonStyles,  borderColor: 'primary.main' }}>
-                  <form
-                  // onSubmit={onSubmit}
-                  >
-                    <Grid
-                      container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justifyContent="center"
-                      sx={{
-                        mb: 1,
-                        width: "100%",
-                        padding: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" , mt:"30px"}}
-                        >
-                          Referencia 1
-                        </Typography>
-
-                      <Grid container padding={5} height={60} sx={{ mt:"-15px"}}>
-                        <TextField
-                          label="Nombre de la referencia"
-                          type="text"
-                          placeholder="Nombre de la referencia"
-                          fullWidth
-                          // value={nameRP}
-                          //  name="nameRP"
-                          // onChange={onInputChange}
-                          // error={!!nameRPValid && formSubmitted}
-                          // helperText={nameRPValid}
-                        />
-                      </Grid>
-                      <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ mt: 5, mb: -4 }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" }}
-                        >
-                          Ubicación
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                        display="flex"
-                        padding={5}
-                        sx={{ alignItems: "center" }}
-                      >
-                        <TextField
-                          label="Latitud "
-                          type="stateplace"
-                          placeholder="Latitud"
-                          width="60vh"
-                          sx={{ mr: 2 }}
-                          // value={latitudeRP}
-                          // name="latitudeRP"
-                          // onChange={onInputChange}
-                          // error={!!latitudeRPValid && formSubmitted}
-                          // helperText={latitudeRPValid}
-                        />
-                        <TextField
-                          label="Longitud"
-                          type="stateplace"
-                          placeholder="Longitud"
-                          width="60vh"
-                          // value={lenghtRP}
-                          // name="lenghtRP"
-                          // onChange={onInputChange}
-                          // error={!!lenghtRPValid && formSubmitted}
-                          // helperText={lenghtRPValid}
-                        />
-                      </Grid>
-                    </Grid>
-                  </form>
-</Box>
-
-<Box sx={{ ...commonStyles,  borderColor: 'primary.main' }}>
-
-                  <form 
-                  className="formReference"
-                  // onSubmit={onSubmit}
-                  >
-                    <Grid
-                      container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justifyContent="center"
-                      sx={{
-                        mb: 1,
-                        width: "100%",
-                        padding: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" , mt:"30px"}}
-                        >
-                          Referencia 2
-                        </Typography>
-
-                      <Grid container padding={5} height={60} sx={{ mt:"-15px"}}>
-                        <TextField
-                          label="Nombre de la referencia"
-                          type="text"
-                          placeholder="Nombre de la referencia"
-                          fullWidth
-                          // value={nameRP}
-                          //  name="nameRP"
-                          // onChange={onInputChange}
-                          // error={!!nameRPValid && formSubmitted}
-                          // helperText={nameRPValid}
-                        />
-                      </Grid>
-                      <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ mt: 5, mb: -4 }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" }}
-                        >
-                          Ubicación
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                        display="flex"
-                        padding={5}
-                        sx={{ alignItems: "center" }}
-                      >
-                        <TextField
-                          label="Latitud "
-                          type="stateplace"
-                          placeholder="Latitud"
-                          width="60vh"
-                          sx={{ mr: 2 }}
-                          // value={latitudeRP}
-                          // name="latitudeRP"
-                          // onChange={onInputChange}
-                          // error={!!latitudeRPValid && formSubmitted}
-                          // helperText={latitudeRPValid}
-                        />
-                        <TextField
-                          label="Longitud"
-                          type="stateplace"
-                          placeholder="Longitud"
-                          width="60vh"
-                          // value={lenghtRP}
-                          // name="lenghtRP"
-                          // onChange={onInputChange}
-                          // error={!!lenghtRPValid && formSubmitted}
-                          // helperText={lenghtRPValid}
-                        />
-                      </Grid>
-                    </Grid>
-                  </form>
-                  </Box>
-
-                  <Box sx={{ ...commonStyles,  borderColor: 'primary.main' }}>
-                  <form
-                  // onSubmit={onSubmit}
-                  >
-                    <Grid
-                      container
-                      spacing={0}
-                      direction="column"
-                      alignItems="center"
-                      justifyContent="center"
-                      sx={{
-                        mb: 1,
-                        width: "100%",
-                        padding: "10px",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" , mt:"30px"}}
-                        >
-                          Referencia 3
-                        </Typography>
-
-                      <Grid container padding={5} height={60} sx={{ mt:"-15px"}}>
-                        <TextField
-                          label="Nombre de la referencia"
-                          type="text"
-                          placeholder="Nombre de la referencia"
-                          fullWidth
-                          // value={nameRP}
-                          //  name="nameRP"
-                          // onChange={onInputChange}
-                          // error={!!nameRPValid && formSubmitted}
-                          // helperText={nameRPValid}
-                        />
-                      </Grid>
-                      <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ mt: 5, mb: -4 }}
-                      >
-                        <Typography
-                          variant="body1"
-                          sx={{ alignItems: "center" }}
-                        >
-                          Ubicación
-                        </Typography>
-                      </Grid>
-                      <Grid
-                        item
-                        display="flex"
-                        padding={5}
-                        sx={{ alignItems: "center" }}
-                      >
-                        <TextField
-                          label="Latitud "
-                          type="stateplace"
-                          placeholder="Latitud"
-                          width="60vh"
-                          sx={{ mr: 2 }}
-                          // value={latitudeRP}
-                          // name="latitudeRP"
-                          // onChange={onInputChange}
-                          // error={!!latitudeRPValid && formSubmitted}
-                          // helperText={latitudeRPValid}
-                        />
-                        <TextField
-                          label="Longitud"
-                          type="stateplace"
-                          placeholder="Longitud"
-                          width="60vh"
-                          // value={lenghtRP}
-                          // name="lenghtRP"
-                          // onChange={onInputChange}
-                          // error={!!lenghtRPValid && formSubmitted}
-                          // helperText={lenghtRPValid}
-                        />
-                      </Grid>
-                    </Grid>
-                  </form>
-                  </Box>
-
-                </Grid>
-              </Grid>
-            </Grid>
 
 
         <Grid 
@@ -628,7 +373,7 @@ export const EditPlace = () => {
               variant="contained"
               justifyContent="center"
               fullWidth
-              // onClick={handleSave}
+              onClick={handleSave}
             >
               Actualizar lugar
             </Button>

@@ -14,9 +14,13 @@ import { useDestinyStore } from "../../../../hooks";
 import { useParams,Navigate ,useNavigate} from 'react-router-dom'
 import { getPlacesById } from "../../../../hooks/API/Get";
 import { deletePlace } from "../../../../hooks/API/Delete";
+import {useFormPlace} from "../../../../context/placeContext"
 
 
 export const DetailPlace = () => {
+
+  const { dataPlace, setdataPlace} = useFormPlace();
+
   const { places, setActivePlace } = useDestinyStore();
 
   const { id } = useParams();
@@ -31,6 +35,7 @@ if (data!=={}) {
 }
 
   setdata(response)
+  setdataPlace(response)
 };
 
 

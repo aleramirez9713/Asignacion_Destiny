@@ -36,9 +36,9 @@ export const SecondSection = () => {
             ¿ A donde  ir ?
           </Typography>
           <Grid container direction='row' justifyContent='center'>
-
+{/* 
            <SearchMin/>
-          <SearchSelect />
+          <SearchSelect /> */}
           </Grid>
           </Grid>
 
